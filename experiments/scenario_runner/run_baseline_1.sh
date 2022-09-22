@@ -23,7 +23,7 @@ for run in `seq 1 1`; do
                     --obstacle_detection_model_paths=${PYLOT_HOME}/dependencies/models/obstacle_detection/efficientdet/efficientdet-d0/efficientdet-d0_frozen.pb \
                     --obstacle_detection_model_names=efficientdet-d0 \
                     --simulator_camera_frequency=$hz --simulator_imu_frequency=$hz --simulator_localization_frequency=$hz &
-                cd $SCENARIO_RUNNER_HOME ; python3 scenario_runner.py --scenario $scenario --reloadWorld --timeout 600
+                cd $ROOT_SCENARIO_RUNNER ; python3 scenario_runner.py --scenario $scenario --reloadWorld --timeout 600
                 echo "[x] Scenario runner finished. Killing Pylot..."
                 pkill --signal 9 -f scenario_runner.py
                 pkill --signal 9 pylot.py
