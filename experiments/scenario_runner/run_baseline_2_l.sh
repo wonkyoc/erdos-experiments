@@ -2,8 +2,8 @@
 
 hzs=(10)
 #detectors=(efficientdet-d2 efficientdet-d3 efficientdet-d4 efficientdet-d5 efficientdet-d6 efficientdet-d7)
-target_speeds=(9)
-file_prefix_name=baseline_1
+target_speeds=(8 9 10)
+file_prefix_name=baseline_2_l
 scenario=ERDOSPedestrianBehindCar
 
 cd ${PYLOT_HOME}
@@ -18,10 +18,10 @@ for run in `seq 1 5`; do
                 echo "[x] Running the experiment with dynamic deadlines, target speed $target_speed"
                 cd ${PYLOT_HOME}/scripts ; ./run_simulator.sh &
                 sleep 10
-                cd $PYLOT_HOME ; python3 pylot.py --flagfile=configs/scenarios/baseline_1.conf --target_speed=$target_speed --log_file_name=$file_base.log --csv_log_file_name=$file_base.csv \
+                cd $PYLOT_HOME ; python3 pylot.py --flagfile=configs/scenarios/baseline_2.conf --target_speed=$target_speed --log_file_name=$file_base.log --csv_log_file_name=$file_base.csv \
                     --profile_file_name=$file_base.json \
-                    --obstacle_detection_model_paths=${PYLOT_HOME}/dependencies/models/obstacle_detection/efficientdet/efficientdet-d0/efficientdet-d0_frozen.pb \
-                    --obstacle_detection_model_names=efficientdet-d0 \
+                    --obstacle_detection_model_paths=${PYLOT_HOME}/dependencies/models/obstacle_detection/efficientdet/efficientdet-d0/efficientdet-d0_frozen.pb,${PYLOT_HOME}/dependencies/models/obstacle_detection/yolox/yolox_l.pth \
+                    --obstacle_detection_model_names=efficientdet-d0,yolox_l \
                     --simulator_fps=30 --simulator_control_frequency=30 \
                     --simulator_camera_frequency=$hz --simulator_imu_frequency=$hz --simulator_localization_frequency=$hz &
                 cd $SCENARIO_RUNNER_HOME ; python3 scenario_runner.py --scenario $scenario --reloadWorld --timeout 600
